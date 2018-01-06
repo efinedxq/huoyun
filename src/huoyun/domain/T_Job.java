@@ -33,89 +33,146 @@ public class T_Job {
 	
 	
 	public T_Job(){}
-	
-	public Integer getID() {
+
+
+	public Integer getId() {
 		return id;
 	}
+
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+
 	public String getJob() {
 		return job;
 	}
+
+
 	public void setJob(String job) {
 		this.job = job;
 	}
+
+
 	public String getNumber() {
 		return number;
 	}
+
+
 	public void setNumber(String number) {
 		this.number = number;
 	}
+
+
 	public String getSex() {
 		return sex;
 	}
+
+
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
+
+
 	public String getAge() {
 		return age;
 	}
+
+
 	public void setAge(String age) {
 		this.age = age;
 	}
+
+
 	public String getKnowledge() {
 		return knowledge;
 	}
+
+
 	public void setKnowledge(String knowledge) {
 		this.knowledge = knowledge;
 	}
+
+
 	public String getSpecialty() {
 		return specialty;
 	}
+
+
 	public void setSpecialty(String specialty) {
 		this.specialty = specialty;
 	}
+
+
 	public String getExperience() {
 		return experience;
 	}
+
+
 	public void setExperience(String experience) {
 		this.experience = experience;
 	}
+
+
 	public String getCity() {
 		return city;
 	}
+
+
 	public void setCity(String city) {
 		this.city = city;
 	}
+
+
 	public String getPay() {
 		return pay;
 	}
+
+
 	public void setPay(String pay) {
 		this.pay = pay;
 	}
+
+
 	public String getParticularInfo() {
 		return particularInfo;
 	}
+
+
 	public void setParticularInfo(String particularInfo) {
 		this.particularInfo = particularInfo;
 	}
+
+
 	public String getfBDate() {
 		return fBDate;
 	}
+
+
 	public void setfBDate(String fBDate) {
 		this.fBDate = fBDate;
 	}
+
+
 	public String getUserName() {
 		return userName;
 	}
+
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
+
 	public String getAuditing() {
 		return auditing;
 	}
+
+
 	public void setAuditing(String auditing) {
 		this.auditing = auditing;
 	}
+	
+	
 }

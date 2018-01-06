@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<!-- 指定Struts 2配置文件的根元素 -->
+<struts>
+	<!--指定全局国际化资源文件 -->
+	<constant name="struts.custom.il8n,resources" value="mess" />
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<!-- 当struts的配置文件修改后,系统是否自动重新加载该文件,默认值为false(生产环境下使用),开发阶段最好打开 -->
+	<constant name="struts.configuration.xml.reload" value="true" />
+
+
+	<!-- struts注解需要定义一下三个 -->
+	<!-- 定义action的位置 进行扫描的根包，该包会被扫描成action -->
+	<constant name="struts.convention.action.packages" value="huoyun.action" />
+
+	<!-- spring+struts是要写上，工厂选用spring -->
+	<constant name="struts.objectFactory" value="spring" />
+
+
+	<constant name="struts.devMode" value="true" />
+	<!-- 设置浏览器是否缓存静态内容。默认值为true(生产环境下使用),开发阶段最好关闭 -->
+	<constant name="struts.serve.static.browserCache" value="false" />
+
+	<package name="huoyun" extends="struts-default">
+		<interceptors>
+			<interceptor class="interceptor.AuthorityInterceptor"
+				name="authority" />
+			<interceptor-stack name="mydefault">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="authority" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="mydefault" />
+		<global-results>
+			<result name="login">/users/masterPage.jsp</result>
+		</global-results>
+		<action name="*">
+			<result>/users/{1}.jsp</result>
+		</action>
+	</package>
+</struts>

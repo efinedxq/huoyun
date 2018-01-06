@@ -23,8 +23,8 @@ public class T_QyUser {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;	//会员编号
-	private String userName;	//登陆名
-	private String userPass;	//密码
+	private String name;	//登陆名
+	private String pass;	//密码
 	private String passQuestion;	//密码提示问题
 	private String passSolution;	//密码提示答案
 	private String linkman;	//联系人
@@ -57,11 +57,11 @@ public class T_QyUser {
 	
 	@OneToMany(targetEntity = T_Special.class)
 	@JoinTable(name = "qy_spe", joinColumns = @JoinColumn(name = "id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id", referencedColumnName = "id"))
-	private Set<T_Truck> speS = new HashSet<>();
+	private Set<T_Special> speS = new HashSet<>();
 	
 	@OneToMany(targetEntity = T_Job.class)
 	@JoinTable(name = "qy_job", joinColumns = @JoinColumn(name = "id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id", referencedColumnName = "id"))
-	private Set<T_Truck> jobS = new HashSet<>();
+	private Set<T_Job> jobS = new HashSet<>();
 	
 	public T_QyUser(){}
 	
@@ -71,17 +71,17 @@ public class T_QyUser {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getUserName() {
-		return userName;
+	public String getName() {
+		return name;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getUserPass() {
-		return userPass;
+	public String getPass() {
+		return pass;
 	}
-	public void setUserPass(String userPass) {
-		this.userPass = userPass;
+	public void setPass(String pass) {
+		this.pass = pass;
 	}
 	public String getPassQuestion() {
 		return passQuestion;
@@ -191,18 +191,28 @@ public class T_QyUser {
 	public void setTruS(Set<T_Truck> truS) {
 		this.truS = truS;
 	}
-	public Set<T_Truck> getSpeS() {
+
+	public String getLocks() {
+		return locks;
+	}
+
+	public void setLocks(String locks) {
+		this.locks = locks;
+	}
+
+	public Set<T_Special> getSpeS() {
 		return speS;
 	}
-	public void setSpeS(Set<T_Truck> speS) {
+
+	public void setSpeS(Set<T_Special> speS) {
 		this.speS = speS;
 	}
-	public Set<T_Truck> getJobS() {
+
+	public Set<T_Job> getJobS() {
 		return jobS;
 	}
-	public void setJobS(Set<T_Truck> jobS) {
+
+	public void setJobS(Set<T_Job> jobS) {
 		this.jobS = jobS;
 	}
-	
-	
 }
