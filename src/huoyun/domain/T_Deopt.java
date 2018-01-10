@@ -15,7 +15,6 @@ public class T_Deopt {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;	//货运仓库编号
-	private String userName;	//发布者
 	private String deoptType;	//货运仓库类型
 	private String depotCity;	//货运仓库所在城市
 	private String depotSite;	//货运仓库所在地点
@@ -29,10 +28,9 @@ public class T_Deopt {
 	private String phone;	//联系方式
 	private String term;	//有效日期
 	private String content;	//详细信息
-	@Generated(GenerationTime.INSERT)  //设置默认值
+	@Generated(GenerationTime.ALWAYS)  //设置默认值
 	private String fBDate;	//发布日期
-	private String userType;	//会员类型
-	@Generated(GenerationTime.INSERT)  //设置默认值
+	@Generated(GenerationTime.ALWAYS)  //设置默认值
 	private String auditing;	//审核状态
 	
 	
@@ -43,12 +41,6 @@ public class T_Deopt {
 	}
 	public void setId(Integer id) {
 		this.id = id;
-	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 	public String getDeoptType() {
 		return deoptType;
@@ -133,12 +125,6 @@ public class T_Deopt {
 	}
 	public void setfBDate(String fBDate) {
 		this.fBDate = fBDate;
-	}
-	public String getUserType() {
-		return userType;
-	}
-	public void setUserType(String userType) {
-		this.userType = userType;
 	}
 	public String getAuditing() {
 		return auditing;

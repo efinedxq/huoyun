@@ -15,6 +15,9 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.context.annotation.Lazy;
 
 @Entity
 @Table(name="T_QyUser")
@@ -38,29 +41,34 @@ public class T_QyUser {
 	private String email;	//电子邮件
 	private String networkIP;	//网址
 	private String content;	//企业简介
-	@Generated(GenerationTime.INSERT)  //设置默认值
+	@Generated(GenerationTime.ALWAYS)  //设置默认值
 	private String locks ;	//锁定状态
-	@Generated(GenerationTime.INSERT)  //设置默认值
+	@Generated(GenerationTime.ALWAYS)  //设置默认值
 	private String lockCause ;	//锁定原因
 
 	@OneToMany(targetEntity = T_Freight.class)
-	@JoinTable(name = "qy_fre", joinColumns = @JoinColumn(name = "id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id", referencedColumnName = "id"))
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "qy_fre", joinColumns = @JoinColumn(name = "qyid", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "freid", referencedColumnName = "id",unique=true))
 	private Set<T_Freight> freS = new HashSet<>();
 
 	@OneToMany(targetEntity = T_Deopt.class)
-	@JoinTable(name = "qy_dep", joinColumns = @JoinColumn(name = "id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id", referencedColumnName = "id"))
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "qy_dep", joinColumns = @JoinColumn(name = "qyid", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "depid", referencedColumnName = "id",unique=true))
 	private Set<T_Deopt> depS = new HashSet<>();
 	
 	@OneToMany(targetEntity = T_Truck.class)
-	@JoinTable(name = "qy_tru", joinColumns = @JoinColumn(name = "id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id", referencedColumnName = "id"))
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "qy_tru", joinColumns = @JoinColumn(name = "qyid", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "truid", referencedColumnName = "id",unique=true))
 	private Set<T_Truck> truS = new HashSet<>();
 	
 	@OneToMany(targetEntity = T_Special.class)
-	@JoinTable(name = "qy_spe", joinColumns = @JoinColumn(name = "id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id", referencedColumnName = "id"))
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "qy_spe", joinColumns = @JoinColumn(name = "qyid", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "speid", referencedColumnName = "id",unique=true))
 	private Set<T_Special> speS = new HashSet<>();
 	
 	@OneToMany(targetEntity = T_Job.class)
-	@JoinTable(name = "qy_job", joinColumns = @JoinColumn(name = "id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id", referencedColumnName = "id"))
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "qy_job", joinColumns = @JoinColumn(name = "qyid", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "jobid", referencedColumnName = "id",unique=true))
 	private Set<T_Job> jobS = new HashSet<>();
 	
 	public T_QyUser(){}
@@ -160,12 +168,6 @@ public class T_QyUser {
 	}
 	public void setContent(String content) {
 		this.content = content;
-	}
-	public String getLock() {
-		return locks;
-	}
-	public void setLock(String lock) {
-		this.locks = lock;
 	}
 	public String getLockCause() {
 		return lockCause;

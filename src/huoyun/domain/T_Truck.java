@@ -15,7 +15,6 @@ public class T_Truck {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;	//货运车辆编号
-	private String userName;	//发布者
 	private String start;	//出发地点
 	private String terminal;	//到达地点
 	private String truckType;	//货运车辆类型
@@ -25,11 +24,10 @@ public class T_Truck {
 	private String phone;	//联系电话
 	private String term;	//有效日期
 	private String content;	//备注
-	@Generated(GenerationTime.INSERT)  //设置默认值
+	@Generated(GenerationTime.ALWAYS)  //设置默认值
 	private String fBDate;	//发布日期
-	private String userType;	//会员类型
-	@Generated(GenerationTime.INSERT)  //设置默认值
-	private String auditing ;	//审核状态
+	@Generated(GenerationTime.ALWAYS)  //设置默认值
+	private Integer auditing ;	//审核状态
 	
 	public T_Truck(){}
 	
@@ -38,12 +36,6 @@ public class T_Truck {
 	}
 	public void setId(Integer id) {
 		this.id = id;
-	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 	public String getStart() {
 		return start;
@@ -105,18 +97,12 @@ public class T_Truck {
 	public void setfBDate(String fBDate) {
 		this.fBDate = fBDate;
 	}
-	public String getUserType() {
-		return userType;
-	}
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
-	public String getAuditing() {
+
+	public Integer getAuditing() {
 		return auditing;
 	}
-	public void setAuditing(String auditing) {
+
+	public void setAuditing(Integer auditing) {
 		this.auditing = auditing;
 	}
-	
-
 }

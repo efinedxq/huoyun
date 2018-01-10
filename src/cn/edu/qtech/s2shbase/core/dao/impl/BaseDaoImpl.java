@@ -308,11 +308,11 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 		hql.append(" where 1 = 1 ");
 
 		/**
-		 * 构造 where 1 = 1 and key =: key
+		 * 构造 where 1 = 1 and key =:key
 		 */
 		if (buildWhere != null) {
 			for (Entry<String, Object> entry : buildWhere.entrySet()) {
-				hql.append(" and " + entry.getKey() + " =: " + entry.getKey());
+				hql.append(" and " + entry.getKey() + " =:" + entry.getKey());
 			}
 		}
 
@@ -353,13 +353,13 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	@Override
 	@SuppressWarnings("unchecked")
 	// hql形式："from User u where u.userId > ?0"
-	public List<T> findByHql(String hql, Object... params) {
+	public List<T> findByHql(String hql, Object params) {
 		// 创建查询
 		Query query = getSessionFactory().getCurrentSession().createQuery(hql);
 		// 为包含占位符的HQL语句设置参数
-		for (int i = 0, len = params.length; i < len; i++) {
-			query.setParameter(i + "", params[i]);
-		}
+//		for (int i = 0, len = params.length; i < len; i++) {
+			query.setParameter(0, params);
+//		}
 		return (List<T>) query.list();
 	}
 
@@ -378,7 +378,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	@SuppressWarnings("unchecked")
 	public List<T> findHqlByPage(String hql, int pageNo, int pageSize) {
 		// 创建查询
-		List list = getSessionFactory().getCurrentSession().createQuery(hql).list();
+		List list = this.getSessionFactory().getCurrentSession().createQuery(hql).list();
 		int size = list.size();
 		int cnt = pageNo * pageSize;
 		if (cnt > size) {
@@ -394,11 +394,15 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	public List<T> findHqlByPageRe(String hql, int pageNo, int pageSize){
 		List list = findByHqlRe(hql);
 		int size = list.size();
+		System.out.println("size?"+size);
 		int cnt = pageNo * pageSize;
+		
 		if (cnt > size) {
-			return list.subList(cnt - pageSize, size);
+			System.out.println("cnt>size?"+(cnt-pageSize)+"  "+size);
+			return list.subList((cnt-pageSize), size);
 		} else {
-			return list.subList(cnt - pageSize, cnt);
+			System.out.println("cnt<=size?"+(cnt-pageSize)+"  "+cnt);
+			return list.subList((cnt-pageSize), cnt);
 		}
 	}
 	/**
@@ -427,5 +431,5 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 		// 执行分页，并返回查询结果
 		return query.setFirstResult((pageNo - 1) * pageSize).setMaxResults(pageSize).list();
 	}
-
+	
 }

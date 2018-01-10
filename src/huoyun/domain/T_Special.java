@@ -14,7 +14,6 @@ public class T_Special {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;	//货运车辆编号
-	private String userName;	//发布者
 	private String start;	//出发地点
 	private String terminal;	//到达地点
 	private String bewrite;	//专线描述
@@ -26,9 +25,9 @@ public class T_Special {
 	private String phone;	//联系电话
 	private String term;	//有效日期
 	private String content;	//备注
-	@Generated(GenerationTime.INSERT)  //设置默认值
+	@Generated(GenerationTime.ALWAYS)  //设置默认值
 	private String fBDate;	//发布日期
-	@Generated(GenerationTime.INSERT)  //设置默认值
+	@Generated(GenerationTime.ALWAYS)  //设置默认值
 	private String auditing;	//审核状态
 	
 	public T_Special(){}
@@ -38,12 +37,6 @@ public class T_Special {
 	}
 	public void setId(Integer id) {
 		this.id = id;
-	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 	public String getStart() {
 		return start;
@@ -123,6 +116,4 @@ public class T_Special {
 	public void setAuditing(String auditing) {
 		this.auditing = auditing;
 	}
-	
-
 }

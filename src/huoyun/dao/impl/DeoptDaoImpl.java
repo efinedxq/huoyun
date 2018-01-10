@@ -10,10 +10,4 @@ import huoyun.domain.T_Deopt;
 
 @Repository("depDao")
 public class DeoptDaoImpl extends BaseDaoImpl<T_Deopt> implements T_DeoptDao {
-
-	@Override
-	public List<T_Deopt> depUserList(Integer userId, Integer u) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

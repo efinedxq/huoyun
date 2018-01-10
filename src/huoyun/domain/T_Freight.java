@@ -14,7 +14,6 @@ public class T_Freight {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;	//货运货物编号
-	private String userName;	//发布者
 	private String start;	//出发地点
 	private String terminal;	//达到地点
 	private String freightType;	//货运货物类别
@@ -24,10 +23,9 @@ public class T_Freight {
 	private String phone;	//联系电话
 	private String term;	//有效日期
 	private String content;	//备注
-	@Generated(GenerationTime.INSERT)  //设置默认值
+	@Generated(GenerationTime.ALWAYS)  //设置默认值
 	private String fBDate;	//发布日期
-	private String userType;	//会员类型
-	@Generated(GenerationTime.INSERT)  //设置默认值
+	@Generated(GenerationTime.ALWAYS)  //设置默认值
 	private String auditing;	//审核状态
 	
 	public T_Freight(){}
@@ -37,12 +35,6 @@ public class T_Freight {
 	}
 	public void setId(Integer id) {
 		this.id = id;
-	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 	public String getStart() {
 		return start;
@@ -103,12 +95,6 @@ public class T_Freight {
 	}
 	public void setfBDate(String fBDate) {
 		this.fBDate = fBDate;
-	}
-	public String getUserType() {
-		return userType;
-	}
-	public void setUserType(String userType) {
-		this.userType = userType;
 	}
 	public String getAuditing() {
 		return auditing;

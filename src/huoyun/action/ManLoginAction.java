@@ -13,14 +13,14 @@ import com.opensymphony.xwork2.ModelDriven;
 import huoyun.domain.T_QyUser;
 @Controller
 @Scope("prototype")
-@Namespace("/mag/")
+@Namespace("/")
 public class ManLoginAction extends ActionSupport {
     private  String name;
     private  String  pass;
     
     private Integer userType = 0;
-    @Action(value="manLogin",results={
-    	@Result(name="success",location="/Manages/manIndex.jsp"),
+    @Action(value="/man/manLogin",results={
+    	@Result(name="success",location="/manages/manIndex.jsp"),
         @Result(name="input",location="/users/manageEntry.jsp")})
     public String manLogin() {
 		ActionContext ctx = ActionContext.getContext();
@@ -33,7 +33,7 @@ public class ManLoginAction extends ActionSupport {
 		return INPUT;
     }
     
-    @Action(value="manOut",results={
+    @Action(value="/man/manOut",results={
         	@Result(name="success",location="/users/manageEntry.jsp")})
     public String manOut(){
     	ActionContext ctx = ActionContext.getContext();

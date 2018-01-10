@@ -10,6 +10,7 @@ public class AuthorityInterceptor extends AbstractInterceptor {
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println(invocation.getAction());
 		ActionContext ctx = invocation.getInvocationContext();
 		Map session = ctx.getSession();
 		

@@ -1,0 +1,194 @@
+body{
+	margin:0;
+	font-size:12pt;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+td
+{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+th
+{
+    font-family: Arial, Helvetica, sans-serif;
+}
+.header ,.mainbox{
+	width:1000px;
+	height:auto;
+	margin:0 auto;
+}
+.header1 {
+    width:1000px;
+    height:160px;
+    background: url(../images/guanggao.png);
+	margin:0 auto;
+}
+.nav{
+	margin-top:-35px;
+}
+ul{
+	list-style:none; 
+	margin : 0 auto;
+}
+ul li{
+	     /* 向左浮动 */
+	     float:left;
+		 width:100px;
+		 text-align:center;
+		 border-right:1px solid #aba;
+		 padding-top: 5px;
+		 height :25px;
+}
+a{
+  text-decoration:none;
+}
+a:hover{
+	 font-style:italic;
+}
+.header2{
+	width:1000px;
+    height:160px;
+    background: url(../images/index.png);
+	margin:35px auto 0px;
+}
+.search{
+	float:right;
+	margin-top:130px;
+}
+
+.left,.login,.news{
+   margin-top:2px;
+   width:250px;
+   float:clear;
+}
+.login{
+	margin-bottom: 5px;
+}
+.login2{
+	border:2px solid #746350;
+	
+}
+.login1{
+	width:250px;
+	height:23px;
+	background:url(../images/dengl.GIF) no-repeat;
+	background-size:100%;
+}
+.news, .company{
+  margin-top:2px;
+  margin-bottom:2px;
+}
+.news1{
+	width:250px;
+	height:23px;
+	background:url(../images/news.GIF) no-repeat;
+	background-size:100%;
+	text-align:right;
+}
+.news1 a, .company1 a{
+	font-size:14px;
+}
+
+.news2, .company2{
+	border:2px solid #746350;
+	width:250px;
+}
+.news2 td,th, .company2 td,th{
+	height:30px;
+	text-align:center;
+	border-bottom:1px solid #746350;
+}
+.company1{
+  	width:250px;
+	height:23px;
+	background:url(../images/qiye.GIF) no-repeat;
+	background-size:100%;
+	text-align:right;
+}
+.fbLeft{
+	width:250px;
+	height:23px;
+	background:url(../images/fabuxuanxiang.gif) no-repeat;
+	background-size:100%;
+	text-align:right;
+	
+}
+.fbtable td{
+	text-align:center;
+	height:50px;
+}
+
+.right{
+	width:735px;
+	margin-left:5px;
+	margin-top:0px;
+	margin-bottom:0px;
+}
+.freInfo, .truInfo, .speInfo, .depInfo, .jobInfo, .newsInfo{
+   width:725px;
+   margin-top:2px;
+}
+
+.fbRight{
+   	width:300px;
+	height:35px;
+	background:url(../images/fabuxinxi.gif) no-repeat;
+}
+
+.freInfo1{
+	width:300px;
+	height:35px;
+	background:url(../images/huoyuan.GIF) no-repeat;
+	text-align:right;
+}
+.comInfo td,.comInfo th, .freInfo td,.freInfo th, .truInfo td, .truInfo th, .speInfo td, .speInfo th, .depInfo td, .depInfo  th, .jobInfo td, .jobInfo th, .newsInfo td,.newsInfo th{
+	height:20px;
+	text-align:center;
+	border:1px solid #746350;
+	font-size:10px;
+}
+.news tr:hover, .company tr:hover,.comInfo tr:hover, .freInfo tr:hover, .truInfo tr:hover, .speInfo tr:hover, .depInfo tr:hover, .jobInfo tr:hover, .newsInfo tr:hover{
+	background-color:#cce0eb;
+}
+.truInfo1{
+	width:300px;
+	height:35px;
+	background:url(../images/cheyuan.GIF) no-repeat;
+	text-align:right;
+}
+.speInfo1{
+	width:300px;
+	height:35px;
+	background:url(../images/zhuanxian.GIF) no-repeat;
+	text-align:right;
+}
+.depInfo1{
+	width:300px;
+	height:35px;
+	background:url(../images/cangchu.GIF) no-repeat;
+	text-align:right;
+}
+.jobInfo1{
+	width:300px;
+	height:35px;
+	background:url(../images/zhaopinxinxi.gif) no-repeat;
+	text-align:right;
+}
+.footer {
+	margin:0 auto;
+	width:1000px;
+	height:90px;
+	background:url(../images/end.GIF);
+}
+.footer1{
+	margin-left:60px;
+	float:clear;
+	width:1000px;
+	height:30px;
+}
+.footer2{
+	width:1000px;
+	height:60px;
+	margin:0 auto;
+}

@@ -1,0 +1,9 @@
+td,th{
+	      text-align:center;
+	   }
+	   tr:hover{
+		      background-color:#cce0eb;
+	   }
+	   a:hover{
+	      font-style:italic;
+	   }

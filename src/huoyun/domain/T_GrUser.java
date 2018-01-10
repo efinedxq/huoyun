@@ -14,6 +14,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "T_GrUser")
@@ -29,21 +31,24 @@ public class T_GrUser {
 	private String linkman; // 联系人
 	private String phone; // 联系方式
 	private String address; // 地址
-	@Generated(GenerationTime.INSERT) // 设置默认值
+	@Generated(GenerationTime.ALWAYS) // 设置默认值
 	private String locks; // 锁定状态
-	@Generated(GenerationTime.INSERT) // 设置默认值
+	@Generated(GenerationTime.ALWAYS) // 设置默认值
 	private String lockCause; // 锁定原因
 
 	@OneToMany(targetEntity = T_Freight.class)
-	@JoinTable(name = "gr_fre", joinColumns = @JoinColumn(name = "id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id", referencedColumnName = "id"))
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "gr_fre", joinColumns = @JoinColumn(name = "grid", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "freid", referencedColumnName = "id",unique=true))
 	private Set<T_Freight> freS = new HashSet<>();
 
 	@OneToMany(targetEntity = T_Deopt.class)
-	@JoinTable(name = "gr_dep", joinColumns = @JoinColumn(name = "id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id", referencedColumnName = "id"))
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "gr_dep", joinColumns = @JoinColumn(name = "grid", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "depid", referencedColumnName = "id",unique=true))
 	private Set<T_Deopt> depS = new HashSet<>();
 	
 	@OneToMany(targetEntity = T_Truck.class)
-	@JoinTable(name = "gr_tru", joinColumns = @JoinColumn(name = "id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id", referencedColumnName = "id"))
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "gr_tru", joinColumns = @JoinColumn(name = "grid", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "truid", referencedColumnName = "id",unique=true))
 	private Set<T_Truck> truS = new HashSet<>();
 	
 	
@@ -113,11 +118,11 @@ public class T_GrUser {
 		this.address = address;
 	}
 
-	public String getLock() {
+	public String getLocks() {
 		return locks;
 	}
 
-	public void setLock(String locks) {
+	public void setLocks(String locks) {
 		this.locks = locks;
 	}
 

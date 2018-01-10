@@ -20,25 +20,23 @@
 	<constant name="struts.objectFactory" value="spring" />
 
 
-	<constant name="struts.devMode" value="true" />
+	<constant name="struts.devMode" value="false" />
 	<!-- 设置浏览器是否缓存静态内容。默认值为true(生产环境下使用),开发阶段最好关闭 -->
 	<constant name="struts.serve.static.browserCache" value="false" />
 
-	<package name="huoyun" extends="struts-default">
-		<interceptors>
-			<interceptor class="interceptor.AuthorityInterceptor"
-				name="authority" />
-			<interceptor-stack name="mydefault">
-				<interceptor-ref name="defaultStack" />
-				<interceptor-ref name="authority" />
-			</interceptor-stack>
-		</interceptors>
-		<default-interceptor-ref name="mydefault" />
-		<global-results>
-			<result name="login">/users/masterPage.jsp</result>
-		</global-results>
-		<action name="*">
-			<result>/users/{1}.jsp</result>
-		</action>
-	</package>
+<!-- 	<package name="huoyun" extends="struts-default"> -->
+<!-- 	<interceptors> -->
+<!-- 		<interceptor class="huoyun.interceptor.AuthorityInterceptor" -->
+<!-- 			name="authority" /> -->
+<!-- 		<interceptor-stack name="mydefault"> -->
+<!-- 			<interceptor-ref name="defaultStack" /> -->
+<!-- 			<interceptor-ref name="authority" /> -->
+<!-- 		</interceptor-stack> -->
+<!-- 	</interceptors> -->
+<!-- 	<default-interceptor-ref name="mydefault" /> -->
+<!-- 	<global-results> -->
+<!-- 		<result name="login">/users/masterPage.jsp</result> -->
+<!-- 	</global-results> -->
+
+<!-- </package> -->
 </struts>

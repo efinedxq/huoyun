@@ -57,6 +57,8 @@ public interface BaseService<T> {
 
 	// 根据HQL语句查询实体
 	List<T> findByHql(String hql);
+	
+	List<T> findByHql(String hql, Object params);
 
 	// 根据HQL语句查询实体 按id倒序返回
 	List<T> findByHqlRe(String hql);

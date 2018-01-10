@@ -114,5 +114,9 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		// TODO Auto-generated method stub
 		return this.getBaseDao().findHqlByPageRe(hql, pageNo, pageSize);
 	}
-    
+	@Override
+	public List<T> findByHql(String hql, Object params) {
+		return this.getBaseDao().findByHql(hql, params);
+		
+	}
 }

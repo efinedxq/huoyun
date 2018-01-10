@@ -48,7 +48,7 @@ public interface BaseDao<T>
 	List<T> findByHqlRe(String hql);
 	// 根据带占位符参数HQL语句查询实体
 	//hql形式："from User u where u.userId > ?0"
-	List<T> findByHql(String hql , Object... params);
+    List<T> findByHql(String hql, Object params) ;
 	//使用hql 语句进行分页查询操作
 	List<T> findHqlByPage(String hql,int pageNo, int pageSize);
 	//使用hql语句进行 分页查询  自动按id倒序 查询 即查询最新插入的数据

@@ -20,7 +20,7 @@ public class T_News {
 	private String newsTitle; // 新闻标题
 	private String newsContent; // 新闻内容
 
-	@Generated(GenerationTime.INSERT) // 设置默认值
+	@Generated(GenerationTime.ALWAYS) // 设置默认值
 	private String fBDate; // 发布日期
 
 	public T_News(){}

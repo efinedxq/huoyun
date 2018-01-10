@@ -17,6 +17,7 @@ import org.springframework.cglib.transform.impl.InterceptFieldFilter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sun.xml.internal.bind.v2.model.core.ID;
@@ -36,10 +37,11 @@ public class DepAction extends ActionSupport implements ModelDriven<T_Deopt> {
 	protected Integer pageNo = 1; // 当前页码
 	protected Integer total;// 向页面传，共多少条
 	protected Integer pageSize = 20;// 从页面传，每页条数
+	protected Integer pageCount = 0;
 
 	protected List<T_Deopt> depList;
+	protected T_Deopt dep = new T_Deopt();
 
-	protected T_Deopt dep;
 	// 用于标识用户身份 0 不需登陆的大众 1 普通用户 2 企业用户 3 管理员
 	protected Integer userType = 0;
 	// 管理员提取信息的标识，0 提取全部信息，1提取已审核信息，2提取未审核信息
@@ -67,10 +69,13 @@ public class DepAction extends ActionSupport implements ModelDriven<T_Deopt> {
 	/*
 	 * deoFive.do 一次向页面传五条已审核的数据 action type ="chain"
 	 */
-	@Action(value = "depFive", results = @Result(name = "success", type = "chain", location = ""))
+	@Action(value = "depFive", results = @Result(name = "success", location = "/users/index.jsp"))
 	public String depFive() {
-		String hql = "from T_Deopt dep order by dep.id desc where dep.auditing like \"已审核\"";
+		String hql = "from T_Deopt dep where dep.auditing = 1 order by dep.id desc ";
 		depList = depService.findHqlByPage(hql, 1, 5);
+		if(depList==null){
+			System.out.println("空");
+		}
 		return SUCCESS;
 	}
 
@@ -79,33 +84,58 @@ public class DepAction extends ActionSupport implements ModelDriven<T_Deopt> {
 	 */
 	@Action(value = "depList", results = @Result(name = "user", location = "/users/depList.jsp"))
 	public String depList() {
-		String hql = "from T_Deopt dep order by dep.id desc where auditing like \"已审核\"";
+		String hql = "from T_Deopt dep  where auditing = 1 order by dep.id desc";
 
 		Map buildWhere = new HashMap<String, Object>();
-		buildWhere.put("auditing", "已审核");
+		buildWhere.put("auditing", "1");
 
 		depList = depService.findHqlByPage(hql, pageNo, pageSize);
 		total = (int) depService.getCount(buildWhere);
+		if (total != null) {
+			if (total % pageSize == 0) {
+				pageCount = total / pageSize;
+			} else {
+				pageCount = total / pageSize + 1;
+			}
+		} else {
+			total = 0;
+			pageCount = 1;
+		}
 		return "user";
 	}
-    /**
-     * 注册用户  根据用户id 来寻找其最新发布的信息。要分为企业用户、个人用户。
-     * @return
-     */
-	@Action(value="/user/depUserList", results=@Result(name="success",location="/users/depUserList.jsp"))
+
+	/**
+	 * 注册用户 根据用户id 来寻找其最新发布的信息。要分为企业用户、个人用户。
+	 * 
+	 * @return
+	 */
+	@Action(value = "/user/depUserList", results = @Result(name = "success", location = "/users/depUserList.jsp"))
 	public String depUserList() {
-		if (userType == 2){
-			String hql = "select grUser.depS from T_GrUser grUser where grUser.id = "+ userId;
+
+		userType = (Integer) ActionContext.getContext().getSession().get("userType");
+		if (userType == 1) {
+			String hql = "select grUser.depS from T_GrUser grUser where grUser.id = " + userId;
 			total = depService.findByHqlRe(hql).size();
 			depList = depService.findHqlByPageRe(hql, pageNo, pageSize);
-		
-		}else if(userType == 1){
-			String hql = "select qyUser.depS from T_QyUser qyUser where qyUser.id = "+ userId;
+
+		} else if (userType == 2) {
+			String hql = "select qyUser.depS from T_QyUser qyUser where qyUser.id = " + userId;
 			total = depService.findByHqlRe(hql).size();
 			depList = depService.findHqlByPageRe(hql, pageNo, pageSize);
 		}
+		if (total != null) {
+			if (total % pageSize == 0) {
+				pageCount = total / pageSize;
+			} else {
+				pageCount = total / pageSize + 1;
+			}
+		} else {
+			total = 0;
+			pageCount = 1;
+		}
 		return SUCCESS;
 	}
+
 	/**
 	 * 管理员 管理界面
 	 * 
@@ -113,26 +143,36 @@ public class DepAction extends ActionSupport implements ModelDriven<T_Deopt> {
 	 */
 	@Action(value = "/man/depManList", results = @Result(name = "success", location = "/manages/manDep.jsp"))
 	public String depManList() {
-			if (checkStatu == 1) {
-				String hql = "from T_Deopt dep order by dep.id desc where auditing like \"已审核\"";
+		if (checkStatu == 1) {
+			String hql = "from T_Deopt dep where auditing =1  order by dep.id desc ";
 
-				Map buildWhere = new HashMap<String, Object>();
-				buildWhere.put("auditing", "已审核");
+			Map buildWhere = new HashMap<String, Object>();
+			buildWhere.put("auditing", "1");
 
-				depList = depService.findHqlByPage(hql, pageNo, pageSize);
-				total = (int) depService.getCount(buildWhere);
-			} else if (checkStatu == 2) {
-				String hql = "from T_Deopt dep order by dep.id desc where auditing like \"未审核\"";
+			depList = depService.findHqlByPage(hql, pageNo, pageSize);
+			total = (int) depService.getCount(buildWhere);
+		} else if (checkStatu == 2) {
+			String hql = "from T_Deopt dep where auditing = 0 order by dep.id desc ";
 
-				Map buildWhere = new HashMap<String, Object>();
-				buildWhere.put("auditing", "未审核");
+			Map buildWhere = new HashMap<String, Object>();
+			buildWhere.put("auditing", "0");
 
-				depList = depService.findHqlByPage(hql, pageNo, pageSize);
-				total = (int) depService.getCount(buildWhere);
+			depList = depService.findHqlByPage(hql, pageNo, pageSize);
+			total = (int) depService.getCount(buildWhere);
+		} else {
+			depList = depService.findAllByPage(pageNo, pageSize);
+			total = (int) depService.findCount();
+		}
+		if (total != null) {
+			if (total % pageSize == 0) {
+				pageCount = total / pageSize;
 			} else {
-				depList = depService.findAllByPage(pageNo, pageSize);
-				total = (int) depService.findCount();
+				pageCount = total / pageSize + 1;
 			}
+		} else {
+			total = 0;
+			pageCount = 1;
+		}
 		return SUCCESS;
 	}
 
@@ -144,14 +184,21 @@ public class DepAction extends ActionSupport implements ModelDriven<T_Deopt> {
 		dep = depService.getById(dep.getId());
 		return SUCCESS;
 	}
+
+	@Action(value = "/user/depModify", results = @Result(name = "success", location = "/users/issuDepMan.jsp"))
+	public String depModify() {
+		dep = depService.getById(dep.getId());
+		return SUCCESS;
+	}
+
 	/**
 	 * depDel.do 根据id删除一条数据。不登陆的不能操作该项。登陆后三个用户都能操作这个，并且方式一样。
 	 */
-	@Action(value = "depList", results = {
-			@Result(name = "user", location = "/users/depUserList.jsp"),
-			@Result(name = "man", location = "/manages/manDep.jsp")})
+	@Action(value = "depDel", results = { @Result(name = "user", location = "/users/depUserList.jsp"),
+			@Result(name = "man", location = "/manages/manDep.jsp") })
 	public String depDel() {
 		depService.deleteById(dep.getId());
+		userType = (Integer) ActionContext.getContext().getSession().get("userType");
 		if (userType == 3) {
 			return "man";
 		} else {
@@ -162,17 +209,19 @@ public class DepAction extends ActionSupport implements ModelDriven<T_Deopt> {
 	/*
 	 * depAdd.do 根据用户id 添加一条数据 。不同用户的
 	 */
-	@Action(value = "/user/depAdd", results = @Result(name = "user", location = "/users/depUserList.jsp"))
+	@Action(value = "/user/depAdd", results = @Result(name = "user", location = "/users/issuDep.jsp"))
 	public String depAdd() {
-		depService.save(dep);
+		userType = (Integer) ActionContext.getContext().getSession().get("userType");
 		if (userType == 1) {
+			depService.save(dep);
 			T_GrUser grUser = grUserService.getById(userId);
 			grUser.getDepS().add(dep);
-			grUserService.save(grUser);
+			grUserService.update(grUser);
 		} else if (userType == 2) {
+			depService.save(dep);
 			T_QyUser qyUser = qyUserService.getById(userId);
 			qyUser.getDepS().add(dep);
-			qyUserService.save(qyUser);
+			qyUserService.update(qyUser);
 		}
 		return "user";
 	}
@@ -192,16 +241,11 @@ public class DepAction extends ActionSupport implements ModelDriven<T_Deopt> {
 	@Action(value = "/man/depCheck", results = @Result(name = "man", location = "/manages/manDep.jsp"))
 	public String depCheck() {
 		dep = depService.getById(dep.getId());
-		if (check == 0) {
-			dep.setAuditing("未审核");
-		} else {
-			dep.setAuditing("已审核");
-		}
+		dep.setAuditing(check + "");
 		depService.update(dep);
 		return "man";
 	}
 
-	
 	public Integer getTotal() {
 		return total;
 	}
@@ -224,22 +268,6 @@ public class DepAction extends ActionSupport implements ModelDriven<T_Deopt> {
 
 	public void setPageSize(Integer pageSize) {
 		this.pageSize = pageSize;
-	}
-
-	public List<T_Deopt> getDepList() {
-		return depList;
-	}
-
-	public void setDepList(List<T_Deopt> depList) {
-		this.depList = depList;
-	}
-
-	public T_Deopt getDep() {
-		return dep;
-	}
-
-	public void setDep(T_Deopt dep) {
-		this.dep = dep;
 	}
 
 	public Integer getUserType() {
@@ -272,6 +300,30 @@ public class DepAction extends ActionSupport implements ModelDriven<T_Deopt> {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+
+	public Integer getPageCount() {
+		return pageCount;
+	}
+
+	public void setPageCount(Integer pageCount) {
+		this.pageCount = pageCount;
+	}
+
+	public List<T_Deopt> getDepList() {
+		return depList;
+	}
+
+	public void setDepList(List<T_Deopt> depList) {
+		this.depList = depList;
+	}
+
+	public T_Deopt getDep() {
+		return dep;
+	}
+
+	public void setDep(T_Deopt dep) {
+		this.dep = dep;
 	}
 
 }

@@ -5,7 +5,7 @@
 	id="WebApp_ID" version="3.0">
 	<display-name>huoyun</display-name>
 	<welcome-file-list>
-		<welcome-file>/users/masterPage.jsp</welcome-file>
+		<welcome-file>/users/default.jsp</welcome-file>
 	</welcome-file-list>
 
 	<filter>

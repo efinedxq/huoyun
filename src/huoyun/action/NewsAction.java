@@ -1,28 +1,33 @@
 package huoyun.action;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
 import huoyun.domain.T_News;
 import huoyun.service.T_NewsService;
-
+@Controller
+@Scope("prototype")
+@Namespace("/")
 public class NewsAction extends ActionSupport implements ModelDriven<T_News> {
 
 	protected Integer pageNo = 1;   // 当前页码
 	protected Integer total;   // 向页面传，共多少条
 	protected Integer pageSize = 20;// 从页面传，每页条数
-
+    protected Integer pageCount = 0;
+    
 	protected List<T_News> newsList;
-	protected T_News news;
+	protected T_News news = new T_News();
 	
 	/**
 	 * 设置过滤器，根据url设置，如果url中包含man、user，则检查userType是否存在。若存在则连接过去，否则就转到masterPage.jsp
@@ -35,11 +40,16 @@ public class NewsAction extends ActionSupport implements ModelDriven<T_News> {
 	/**
 	 * newsFive大众获取5条最新数据
 	 */
-	@Action(value = "newsFive", results = @Result(name = "success", type = "chain", location = "jobFive"))
+	@Action(value = "newsFive", results = @Result(name = "success", type = "chain", location = "qyUserFive"))
 	public String newsFive() {
-		String hql = "from T_news news order by news.id desc";
+		
+		System.out.println("访问位置：newsManList");
+		
+		String hql = "from T_News news order by news.id desc";
 		newsList = newsService.findHqlByPage(hql, 1, 5);
-		total = (int) newsService.findCount();
+		
+		ActionContext.getContext().getSession().put("newsList",newsList);
+		
 		return SUCCESS;
 	}
 
@@ -48,9 +58,19 @@ public class NewsAction extends ActionSupport implements ModelDriven<T_News> {
 	 */
 	@Action(value = "newsList", results = @Result(name = "success", location = "/users/newsList.jsp"))
 	public String newsList() {
-		String hql = "from T_news news order by news.id desc";
+		String hql = "from T_News news order by news.id desc";
 		newsList = newsService.findHqlByPage(hql, pageNo, pageSize);
 		total = (int) newsService.findCount();
+		if (total != null) {
+			if (total % pageSize == 0) {
+				pageCount = total / pageSize;
+			} else {
+				pageCount = total / pageSize + 1;
+			}
+		} else {
+			total = 0;
+			pageCount = 1;
+		}
 		return SUCCESS;
 	}
 
@@ -59,9 +79,20 @@ public class NewsAction extends ActionSupport implements ModelDriven<T_News> {
 	 */
 	@Action(value = "/man/newsManList", results = @Result(name = "success", location = "/manages/manNews.jsp"))
 	public String newsManList() {
-		String hql = "from T_news news order by news.id desc";
+		
+		String hql = "from T_News news order by news.id desc";
 		newsList = newsService.findHqlByPage(hql, pageNo, pageSize);
 		total = (int) newsService.findCount();
+		if (total != null) {
+			if (total % pageSize == 0) {
+				pageCount = total / pageSize;
+			} else {
+				pageCount = total / pageSize + 1;
+			}
+		} else {
+			total = 0;
+			pageCount = 1;
+		}
 		return SUCCESS;
 	}
 
@@ -95,7 +126,7 @@ public class NewsAction extends ActionSupport implements ModelDriven<T_News> {
 	@Override
 	public T_News getModel() {
 		// TODO Auto-generated method stub
-		return null;
+		return news;
 	}
 
 	public Integer getPageNo() {
@@ -137,5 +168,14 @@ public class NewsAction extends ActionSupport implements ModelDriven<T_News> {
 	public void setNews(T_News news) {
 		this.news = news;
 	}
+
+	public Integer getPageCount() {
+		return pageCount;
+	}
+
+	public void setPageCount(Integer pageCount) {
+		this.pageCount = pageCount;
+	}
+
     
 }

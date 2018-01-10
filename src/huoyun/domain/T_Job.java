@@ -25,11 +25,11 @@ public class T_Job {
 	private String city;	//工作地点
 	private String pay;	//月薪
 	private String particularInfo;	//详细信息
-	@Generated(GenerationTime.INSERT)  //设置默认值
+	@Generated(GenerationTime.ALWAYS)  //设置默认值
 	private String fBDate;	//发布日期
-	private String userName;	//发布者
-	@Generated(GenerationTime.INSERT)  //设置默认值
+	@Generated(GenerationTime.ALWAYS)  //设置默认值
 	private String auditing ;	//审核状态
+	
 	
 	
 	public T_Job(){}
@@ -155,16 +155,6 @@ public class T_Job {
 	}
 
 
-	public String getUserName() {
-		return userName;
-	}
-
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-
 	public String getAuditing() {
 		return auditing;
 	}
@@ -174,5 +164,7 @@ public class T_Job {
 		this.auditing = auditing;
 	}
 	
-	
+	public String toString(){
+		return "<job:"+job+ " number:"+number+" sex:"+sex+" age:"+age+" knowledge"+knowledge+">";
+	}
 }
